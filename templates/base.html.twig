@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		<!-- Favicon-->
+		<link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}"/>
+		{% block stylesheet %}
+			<!-- Bootstrap icons-->
+			<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+			<!-- Core theme CSS (includes Bootstrap)-->
+			<link href="{{ asset('css/styles.css') }}" rel="stylesheet"/>
+		{% endblock stylesheet %}
+
+	</head>
+	<body>
+		{%block navbar %}
+			<!-- Navigation-->
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<div class="container px-4 px-lg-5">
+					<a class="navbar-brand" href="{{path('index') }}">Voitures.ma</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="{{ path('index') }}">Accueil</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">à propos</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('voiture_promotion') }}">Promotions</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="">Comparaison voitures
+								</a>
+							</li>
+							{% if is_granted('ROLE_ADMIN') %}
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administration</a>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<li>
+											<a class="dropdown-item" href="{{path('commande_index') }}">Commandes</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="{{ path('client_index')}}">Clients</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="{{ path('voiture_index') }}">Voitures</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#!">Marques</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="{{ path('modele_index') }}">Modéles</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#!">Carburants</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="{{ path('couleur_index') }}">Couleurs</a>
+										</li>
+									</ul>
+								</li>
+							{%endif %}
+						</ul>
+						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<a class="btn btn-outline-dark" href="{{ path('app_logout') }}" type="submit">
+								Déconnexion
+							</a>
+						{%else %}
+							<a class="btn btn-outline-dark" href="{{ path('app_login') }}" type="submit">
+								Connexion
+							</a>
+						{% endif %}
+
+					</form>
+				</div>
+			</div>
+		</body>
+	</html>
+</nav>{% endblock %}<!-- Header-->{% block header %}
+<header class="bg-dark py-5">
+	<div class="container px-4 px-lg-5 my-5">
+		<div class="text-center text-white">
+			<h1 class="display-4 fw-bolder">Commandez votre voiture</h1>
+			<p class="lead fw-normal text-white-50 mb-0">1ére plateforme marocaine de ventes des voitures</p>
+		</div>
+	</div>
+</header>{% endblock %}<!-- Section--><section class="py-5">
+<div class="container px-4 px-lg-5 mt-1"> {% block search %}{% endblock %}{% block body %}{%endblock %}{%block pagination %}{% endblock %}
+	</section>
+	<!-- Footer-->
+	<footer class="py-5 bg-dark">
+		<div class="container">
+			<p class="m-0 text-center text-white">Copyright &copy; voitures.ma 2021</p>
+		</div>
+	</footer>
+	<!-- Bootstrap core JS-->
+	{%block javascript %}
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Core theme JS-->
+		<script src="{{ asset('js/scripts.js') }}"></script>
+	{% endblock %}
+</body></body></html></body></html>

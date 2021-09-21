@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commandez votre voiture{% endblock %}
+
+{% block body %}
+    <h1>Merci de saisir votre informations personnelles</h1>
+
+    {{ include('client/_form.html.twig') }}
+    <br>
+    <a href="{{ path('client_index') }}" class="btn btn-primary">Retour </a>
+{% endblock %}

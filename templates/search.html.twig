@@ -1,0 +1,88 @@
+<div class="card mb-2 col-12">
+	<div class="card-header fw-bold">Recherche</div>
+	<div class="card-body">
+		<form method="get" action="{{ path('index') }}">
+			<div class="row">
+				<div class="col-sm-12">
+					<label for="" class="col-sm-5 col-form-label fw-bold">Marque :
+					</label>
+					<select onchange="this.form.submit()" name="marque" class="form-select col-sm-10" style="margin-right: 20px;">
+						<option value="">
+							Choisir votre marque</option>
+						{% for marque in marques %}
+							<option {{ (idMarque == marque.id) ? 'selected' : '' }} 
+							value="{{marque.id}}">{{marque.nomMarque}}
+							</option>
+						{% endfor %}
+					</select>
+
+					<label for="inputPassword" class="col-sm-5
+																																																																																														                                           col-form-label fw-bold">Modéle :
+					</label>
+					<select onchange="this.form.submit()" class="form-select" name="modele" style="margin-right: 20px;">
+						<option value="">
+							Choisir votre modéle</option>
+						{% for modele in modeles %}
+
+							<option {{ (idModele == modele.id) ? 'selected' : '' }} value="{{ modele.id }}">
+								{{ modele.nomModele }}</option>
+
+						{% endfor %}
+					</select>
+
+
+					<label for="inputPassword" class="col-sm-5 col-form-label fw-bold">Etat :</label>
+					<select onchange="this.form.submit()" name="etat" class="form-select" style="margin-right: 20px;">
+
+						<option {{ (etat == "") ? 'selected' : '' }} value="">
+							Choisir votre état</option>
+						<option {{ (etat == "Ocasion") ? 'selected' : '' }} value="Ocasion">Ocasion</option>
+						<option {{ (etat == "Neuve") ? 'selected' : '' }} value="Neuve">Neuve</option>
+
+					</select>
+				</div>
+
+			</div>
+			<div class="row mt-2">
+				<div class="col-sm-12">
+
+					<label for="inputPassword" class="col-sm-5
+																																																																																						    								                                           col-form-label fw-bold">Type carburant :
+					</label>
+					<select onchange="this.form.submit()" name="carb" class="form-select col-1" style="margin-right: 20px;">
+						<option value="">
+							Choisir votre type de carburant</option>
+						{% for carburant in carburants %}
+							<option {{ (idCarb == carburant.id) ? 'selected' : '' }} value="{{ carburant.id }}">
+								{{ carburant.nomCarburant }}</option>
+						{% endfor %}
+
+
+					</select>
+					<label for="inputPassword" class="col-sm-1
+																																																																																														                                           col-form-label fw-bold">Couleur :
+					</label>
+					<select onchange="this.form.submit()" name="col" class="form-select" style="margin-right: 20px;">
+						<option value="">
+							Choisir votre couleur</option>
+						{% for c in couleurs %}
+							<option {{ (idCol == c.id) ? 'selected' : '' }} value="{{c.id}}">
+								{{ c.nomCouleur}}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+
+			<div class="row mt-2">
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input class="form-control" value={{budgetMin}} style="margin-right: 20px;" type="number" name="bud_min" placeholder="Budget min" aria-label="Budget" aria-describedby="button-search"/>
+						<input class="form-control" type="number" value={{budgetMax}} placeholder="Budget max" name="bud_max" aria-label="Budget" aria-describedby="button-search"/>
+						<button class="btn btn-primary" name="search" id="button-search" type="submit" value="Recherchez">Recherchez</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

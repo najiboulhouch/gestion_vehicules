@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commandez votre voiture
+{% endblock %}
+
+{% block body %}
+	<h1>Merci de saisir votre informations personnelles</h1>
+	{# read and display just one flash message type #}
+	{% for message in app.flashes('notice') %}
+		<div class="alert alert-success" role="alert">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{{ include('commande/_form.html.twig') }}
+	<br>
+	<a href="{{ path('index') }}" class="btn btn-primary">Retour
+	</a>
+{% endblock %}

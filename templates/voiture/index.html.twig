@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voitures{% endblock %}
+
+{% block body %}
+    <h1>Listes des voitures enregistrées</h1>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Prix</th>
+                <th>Km</th>
+                <th>Date de construction</th>
+                <th>Etat</th>
+                <th>Date de mise en vente</th>
+                <th>Disponibilité</th>
+                <th>Promotion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for voiture in voitures %}
+            <tr>
+                <td>{{ voiture.prix }}</td>
+                <td>{{ voiture.km }}</td>
+                <td>{{ voiture.dateConstruction ? voiture.dateConstruction|date('Y-m-d') : '' }}</td>
+                <td>{{ voiture.etat }}</td>
+                <td>{{ voiture.dateMiseEnVente ? voiture.dateMiseEnVente|date('Y-m-d') : '' }}</td>
+                <td>{{ voiture.disponibilite ? 'Oui' : 'Non' }}</td>
+                <td>{{ voiture.promotion }}%</td>
+                <td>
+                    <a class="btn btn-warning" href="{{ path('voiture_show', {'id': voiture.id}) }}">Afficher</a>
+                    <a class="btn btn-info" href="{{ path('voiture_edit', {'id': voiture.id}) }}">Modifier</a>
+                {{ include('voiture/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">pas de voitures enregistrées</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('voiture_new') }}">Ajouter une voiture</a>
+{% endblock %}

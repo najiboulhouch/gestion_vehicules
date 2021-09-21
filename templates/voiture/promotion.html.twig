@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block title %}Plateforme de vente des voiture en ligne | Promotion
+{% endblock %}
+{% block body %}
+	<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+		{{parent() }}
+		{% for v in pagination  %}
+
+			<div class="col mb-5">
+				<div
+					class="card h-100">
+					<!-- Product image-->
+					<img
+					class="card-img-top" src="{{ asset((v.modele.images is empty) ? 
+					'images/noimage.png' : v.modele.images[0].nomImage ) }}" alt="..."/>
+					<!-- Product details-->
+					<div class="card-body p-4">
+						<div class="text-center">
+							<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+								{{ v.Modele.Marque.nomMarque }}</div>
+							<div class="badge bg-info text-white position-absolute" style="top: 0.5rem; left: 0.5rem">
+								{{ v.etat }}</div>
+							<!-- Product name-->
+							<h5 class="fw-bolder">{{ v.Modele.nomModele }}</h5>
+							<h6 class="fw-bolder" style="color: red; ">
+                                               {{ v.Carburant.nomCarburant }}</h6>
+
+                             <span class="text-muted text-decoration-line-through">
+                                              {{ v.prix|number_format }} MAD</span> <br>
+							
+							{{(v.prix - (v.prix * (v.promotion / 100)))|number_format }} MAD
+						</div>
+					</div>
+					<!-- Product actions-->
+					<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+						<div class="text-center">
+							<a class="btn btn-primary" href="{{ path('voiture_show', {'id': v.id}) }}">
+								Fiche technique</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{%endfor %}
+	</div>
+{% endblock %}
+{%block pagination %}
+	<!-- Pagination-->
+	<nav aria-label="Pagination" class="pagination justify-content-center my-1">
+		{{ knp_pagination_render(pagination) }}
+	</nav>
+{% endblock %}
