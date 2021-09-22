@@ -2,8 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Carburant;
 use App\Entity\Couleur;
+use App\Entity\Modele;
 use App\Entity\Voiture;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,44 +23,48 @@ class VoitureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('prix' , TextType::class,[
+            ->add('prix', TextType::class, [
                 'label'      => 'Prix'
             ])
-            ->add('km' , IntegerType::class , [
+            ->add('km', IntegerType::class, [
                 'label' => 'Kélométrage'
             ])
-            ->add('dateConstruction' , DateType::class , [
+            ->add('dateConstruction', DateType::class, [
                 'label'     => 'Date de construction',
                 'widget' => 'single_text'
             ])
-            ->add('etat' , ChoiceType::class , [
+            ->add('etat', ChoiceType::class, [
                 'choices'  => [
                     'Choisir votre état' => '',
-                    'Neuve' => 'Nuve',
-                    'Occasion' => 'Occasion',
+                    'Neuve' => 'Neuve',
+                    'Ocasion' => 'Ocasion',
                 ],
                 'label'     => 'Etat'
             ])
-            ->add('dateMiseEnVente' , DateType::class , [
+            ->add('dateMiseEnVente', DateType::class, [
                 'label'     => 'Date de mise en vente',
                 'widget' => 'single_text'
             ])
-            ->add('disponibilite' , CheckboxType::class, [
+            ->add('disponibilite', CheckboxType::class, [
                 'label' => 'Disponibilité'
-            ] )
-            ->add('promotion' , PercentType::class , [
+            ])
+            ->add('promotion', IntegerType::class, [
                 'label' => 'Promotion(%)'
             ])
-            ->add('Couleur' , CollectionType::class, [
-                // each entry in the array will be an "email" field
-                'entry_type' => CouleurType::class ,
-                'entry_options' => ['label' => false],
-                'allow_add' => true,
-                'allow_delete' => true,
+            ->add('Couleur', EntityType::class, [
+                'class' => Couleur::class,
+                'choice_label' => 'nomCouleur'
             ])
-            ->add('Carburant')
-            ->add('Modele');
-        ;
+            ->add('Carburant', EntityType::class, [
+                'class' => Carburant::class,
+                'choice_label' => 'nomCarburant',
+                'label' => 'Type de carburant'
+            ])
+            ->add('Modele', EntityType::class, [
+                'class' => Modele::class,
+                'choice_label' => 'nomModele',
+                'label' => 'Type de modéle'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
