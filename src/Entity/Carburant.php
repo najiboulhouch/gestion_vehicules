@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CarburantRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity(repositoryClass=CarburantRepository::class)
@@ -20,6 +22,13 @@ class Carburant
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Le nom du carburant est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le nom du carburant doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "Le nom du carburant ne peut pas dépasser {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $nomCarburant;

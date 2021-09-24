@@ -21,10 +21,16 @@ class VoitureController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      * @Route("/", name="voiture_index", methods={"GET"})
      */
-    public function index(VoitureRepository $voitureRepository): Response
+    public function index(Request $request , VoitureRepository $voitureRepository , PaginatorInterface $paginator): Response
     {
+        $voitures = $voitureRepository->findAll();
+        $pagination = $paginator->paginate(
+            $voitures,
+            $request->query->getInt('page', 1),
+            4
+        );
         return $this->render('voiture/index.html.twig', [
-            'voitures' => $voitureRepository->findAll(),
+            'voitures' => $pagination,
         ]);
     }
 

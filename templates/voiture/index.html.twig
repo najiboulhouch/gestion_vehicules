@@ -44,3 +44,9 @@
 
     <a class="btn btn-success" href="{{ path('voiture_new') }}">Ajouter une voiture</a>
 {% endblock %}
+{%block pagination %}
+	<!-- Pagination-->
+	<nav aria-label="Pagination" class="pagination justify-content-center my-1">
+		{{ knp_pagination_render(voitures) }}
+	</nav>
+{% endblock %}

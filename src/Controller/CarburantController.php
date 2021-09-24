@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Carburant;
 use App\Form\CarburantType;
 use App\Repository\CarburantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CarburantController extends AbstractController
 {
+
+    private $entityManager ;
+
+    public function __construct(EntityManagerInterface $em){
+        $this->entityManager = $em;
+    }
+
+
     /**
      * @Route("/", name="carburant_index", methods={"GET"})
      */
@@ -35,9 +44,8 @@ class CarburantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($carburant);
-            $entityManager->flush();
+            $this->entityManager->persist($carburant);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('carburant_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,7 +75,7 @@ class CarburantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('carburant_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -84,9 +92,9 @@ class CarburantController extends AbstractController
     public function delete(Request $request, Carburant $carburant): Response
     {
         if ($this->isCsrfTokenValid('delete'.$carburant->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($carburant);
-            $entityManager->flush();
+            
+            $this->entityManager->remove($carburant);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('carburant_index', [], Response::HTTP_SEE_OTHER);

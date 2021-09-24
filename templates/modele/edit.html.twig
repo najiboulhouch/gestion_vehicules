@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Modele{% endblock %}
+{% block title %}Mofidier un Modèle{% endblock %}
 
 {% block body %}
-    <h1>Edit Modele</h1>
+    <h1>Modifier un modèle</h1>
 
-    {{ include('modele/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('modele/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+<br>
+    <a class="btn btn-primary" href="{{ path('modele_index') }}">Retour</a>
 
-    <a href="{{ path('modele_index') }}">back to list</a>
-
-    {{ include('modele/_delete_form.html.twig') }}
 {% endblock %}

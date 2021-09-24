@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\OptionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=OptionRepository::class)
@@ -20,11 +22,21 @@ class Option
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @Assert\Positive(message="Le prix doit être positif")
+     * @Assert\NotBlank(message="Le prix est obligatoire")
+     * 
      */
     private $prixOption;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="L'option est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "L'option doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "L'option ne peut pas dépasser {{ limit }} caractères"
+     * )
      */
     private $nomPrix;
 

@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Modele{% endblock %}
+{% block title %}Ajouter un modèle{% endblock %}
 
 {% block body %}
-    <h1>Create new Modele</h1>
+    <h1>Ajouter un nouveau modèle</h1>
 
     {{ include('modele/_form.html.twig') }}
-
-    <a href="{{ path('modele_index') }}">back to list</a>
+<br>
+     <a class="btn btn-primary" href="{{ path('modele_index') }}">Retour</a>
 {% endblock %}

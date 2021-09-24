@@ -6,6 +6,8 @@ use App\Repository\VoitureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=VoitureRepository::class)
@@ -21,36 +23,47 @@ class Voiture
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @Assert\NotBlank(message="Le prix est obligatoire")
+     * @Assert\Positive(message="Le prix doit être positif")
      */
     private $prix;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Le kélométrage est obligatoire")
+     * @Assert\PositiveOrZero(message="Le prix doit être positif")
      */
     private $km;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThanOrEqual("today", message="La date de construction doit être inférieure à la date d'aujourd'hui")
      */
     private $dateConstruction;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\Choice({"Ocasion", "Neuve"} , message="{{ value  }} ne correspond pas avec les valeurs sauivantes :  {{ choices }}")
      */
     private $etat;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThan(propertyPath="dateConstruction", message="La date de mise en vente doit être supérieure à la date de construction")
      */
     private $dateMiseEnVente;
 
     /**
      * @ORM\Column(type="boolean")
+     * 
      */
     private $disponibilite;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="La promotion est obligatoire")
+     * @Assert\PositiveOrZero(message="La promotion doit être positive")
+     * 
      */
     private $promotion;
 

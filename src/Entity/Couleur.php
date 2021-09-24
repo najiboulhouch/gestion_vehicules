@@ -6,6 +6,8 @@ use App\Repository\CouleurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=CouleurRepository::class)
@@ -20,6 +22,13 @@ class Couleur
     private $id;
 
     /**
+     * @Assert\NotBlank(message="La couleur est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "La couleur doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "La couleur ne peut pas dépasser {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=50)
      */
     private $nomCouleur;

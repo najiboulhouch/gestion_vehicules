@@ -6,6 +6,8 @@ use App\Repository\MarqueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=MarqueRepository::class)
@@ -21,6 +23,13 @@ class Marque
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La marque est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "La marque doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "La marque ne peut pas dépasser {{ limit }} caractères"
+     * )
      */
     private $nomMarque;
 

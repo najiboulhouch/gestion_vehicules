@@ -6,6 +6,8 @@ use App\Repository\ModeleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ModeleRepository::class)
@@ -21,6 +23,13 @@ class Modele
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le modèle est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le modèle doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "Le modèle ne peut pas dépasser {{ limit }} caractères"
+     * )
      */
     private $nomModele;
 

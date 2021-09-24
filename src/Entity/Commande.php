@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CommandeRepository::class)
@@ -19,11 +20,20 @@ class Commande
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Date de commande est obligatoire")
+     * @Assert\Date(message="Merci de respecter le format de date de rendez-vous")
      */
     private $dateRdv;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le commentaire est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le commentaire doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "Le commentaire ne peut pas dépasser {{ limit }} caractères"
+     * )
      */
     private $commentaire;
 

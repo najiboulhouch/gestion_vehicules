@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
@@ -18,6 +20,13 @@ class Image
     private $id;
 
     /**
+     * @Assert\NotBlank(message="L'image est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "L'image doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "L'image ne peut pas dépasser {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $nomImage;

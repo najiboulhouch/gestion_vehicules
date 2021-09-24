@@ -17,13 +17,14 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class VoitureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('prix', TextType::class, [
+            ->add('prix', IntegerType::class, [
                 'label'      => 'Prix'
             ])
             ->add('km', IntegerType::class, [
@@ -31,7 +32,7 @@ class VoitureType extends AbstractType
             ])
             ->add('dateConstruction', DateType::class, [
                 'label'     => 'Date de construction',
-                'widget' => 'single_text'
+                'widget' => 'single_text',
             ])
             ->add('etat', ChoiceType::class, [
                 'choices'  => [
@@ -50,6 +51,9 @@ class VoitureType extends AbstractType
             ])
             ->add('promotion', IntegerType::class, [
                 'label' => 'Promotion(%)'
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description'
             ])
             ->add('Couleur', EntityType::class, [
                 'class' => Couleur::class,

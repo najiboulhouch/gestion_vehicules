@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marques{% endblock %}
+
+{% block body %}
+    <h1>Listes des marques enregistrées</h1>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>nom de marque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for marque in marques %}
+            <tr>
+                <td>{{ marque.nomMarque }}</td>
+                <td>
+                    <a class="btn btn-warning" href="{{ path('marque_show', {'id': marque.id}) }}">Afficher</a>
+                    <a class="btn btn-info" href="{{ path('marque_edit', {'id': marque.id}) }}">Modifier</a>
+                    {{ include('marque/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">pas de marque enregistrées</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('marque_new') }}">Ajouter une nouvelle marque</a>
+{% endblock %}
