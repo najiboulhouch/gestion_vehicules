@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/commande")
+ * @Route("{_locale}/commande" , requirements={"_locale": "en|fr"})
  */
 class CommandeController extends AbstractController
 {

@@ -19,7 +19,7 @@ class CommandeType extends AbstractType
                 'label' => false
             ])
             ->add('commentaire' , TextareaType::class,[
-                'label'      => 'Commentaire'
+                'label'      => 'forms.commende.comment'
                 ])      
         ;
     }

@@ -1,14 +1,15 @@
 <div class="card mb-2 col-12">
-	<div class="card-header fw-bold">Recherche</div>
+	<div class="card-header fw-bold">{% trans %} Recherche{% endtrans %}</div>
 	<div class="card-body">
 		<form method="get" action="{{ path('index') }}">
 			<div class="row">
 				<div class="col-sm-12">
-					<label for="" class="col-sm-5 col-form-label fw-bold">Marque :
+					<label for="" class="col-sm-5 col-form-label fw-bold">	{% trans %}Marque{% endtrans %} :
 					</label>
-					<select onchange="this.form.submit()" name="marque" class="form-select col-sm-10" style="margin-right: 20px;">
+					<select onchange="this.form.submit()" name="marque"
+					 class="form-select col-sm-10" style="margin-right: 20px;">
 						<option value="">
-							Choisir votre marque</option>
+							{% trans %}Choisir votre marque{% endtrans %}</option>
 						{% for marque in marques %}
 							<option {{ (idMarque == marque.id) ? 'selected' : '' }} 
 							value="{{marque.id}}">{{marque.nomMarque}}
@@ -16,12 +17,11 @@
 						{% endfor %}
 					</select>
 
-					<label for="inputPassword" class="col-sm-5
-																																																																																														                                           col-form-label fw-bold">Modéle :
-					</label>
-					<select onchange="this.form.submit()" class="form-select" name="modele" style="margin-right: 20px;">
+					<label for="inputPassword" class="col-sm-5 col-form-label fw-bold">{% trans %}Modèle{% endtrans %} :</label>
+					<select onchange="this.form.submit()" class="form-select" 
+					name="modele" style="margin-right: 20px;">
 						<option value="">
-							Choisir votre modéle</option>
+							{% trans %}Choisir votre modéle{% endtrans %}</option>
 						{% for modele in modeles %}
 
 							<option {{ (idModele == modele.id) ? 'selected' : '' }} value="{{ modele.id }}">
@@ -31,11 +31,11 @@
 					</select>
 
 
-					<label for="inputPassword" class="col-sm-5 col-form-label fw-bold">Etat :</label>
+					<label for="inputPassword" class="col-sm-5 col-form-label fw-bold">{% trans %}Etat{% endtrans %} :</label>
 					<select onchange="this.form.submit()" name="etat" class="form-select" style="margin-right: 20px;">
 
 						<option {{ (etat == "") ? 'selected' : '' }} value="">
-							Choisir votre état</option>
+							{% trans %}Choisir votre état{% endtrans %}</option>
 						<option {{ (etat == "Ocasion") ? 'selected' : '' }} value="Ocasion">Ocasion</option>
 						<option {{ (etat == "Neuve") ? 'selected' : '' }} value="Neuve">Neuve</option>
 
@@ -51,7 +51,7 @@
 					</label>
 					<select onchange="this.form.submit()" name="carb" class="form-select col-1" style="margin-right: 20px;">
 						<option value="">
-							Choisir votre type de carburant</option>
+							{% trans %}Choisir votre type de carburant{% endtrans %}</option>
 						{% for carburant in carburants %}
 							<option {{ (idCarb == carburant.id) ? 'selected' : '' }} value="{{ carburant.id }}">
 								{{ carburant.nomCarburant }}</option>
@@ -64,7 +64,7 @@
 					</label>
 					<select onchange="this.form.submit()" name="col" class="form-select" style="margin-right: 20px;">
 						<option value="">
-							Choisir votre couleur</option>
+							{% trans %}Choisir votre couleur{% endtrans %}</option>
 						{% for c in couleurs %}
 							<option {{ (idCol == c.id) ? 'selected' : '' }} value="{{c.id}}">
 								{{ c.nomCouleur}}
@@ -77,9 +77,15 @@
 			<div class="row mt-2">
 				<div class="col-sm-6">
 					<div class="input-group">
-						<input class="form-control" value={{budgetMin}} style="margin-right: 20px;" type="number" name="bud_min" placeholder="Budget min" aria-label="Budget" aria-describedby="button-search"/>
-						<input class="form-control" type="number" value={{budgetMax}} placeholder="Budget max" name="bud_max" aria-label="Budget" aria-describedby="button-search"/>
-						<button class="btn btn-primary" name="search" id="button-search" type="submit" value="Recherchez">Recherchez</button>
+						<input class="form-control" value={{budgetMin}} style="margin-right: 20px;" 
+						type="number" name="bud_min" placeholder="Budget min" aria-label="Budget" 
+						aria-describedby="button-search"/>
+						<input class="form-control" type="number"
+						value={{budgetMax}} placeholder="Budget max" 
+						name="bud_max" aria-label="Budget" aria-describedby="button-search"/>
+						<button class="btn btn-primary" name="search" 
+						id="button-search" type="submit" 
+						value="Recherchez">{% trans %}Recherchez{% endtrans %}</button>
 					</div>
 				</div>
 			</div>

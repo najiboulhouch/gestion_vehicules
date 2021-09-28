@@ -22,19 +22,17 @@ class ModeleRepository extends ServiceEntityRepository
     // /**
     //  * @return Modele[] Returns an array of Modele objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function getLastId()
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+
+        return  $this->createQueryBuilder('m')
+        ->orderBy('m.id', 'DESC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Modele

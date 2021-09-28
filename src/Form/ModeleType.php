@@ -2,13 +2,17 @@
 
 namespace App\Form;
 
+use App\Entity\Image;
 use App\Entity\Marque;
 use App\Entity\Modele;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class ModeleType extends AbstractType
 {
@@ -16,11 +20,18 @@ class ModeleType extends AbstractType
     {
         $builder
             ->add('nomModele' , TextType::class , [
-                'label' => 'Nom de modèle'
+                'label' => 'forms.modele.name'
             ])
             ->add('Marque' , EntityType::class , [
                 'class' => Marque::class,
-                'label' => 'Marque'
+                'label' => 'forms.marque.type'
+            ])
+            ->add('picture' , FileType::class , [
+                 'mapped' => false,
+                 'multiple' => true,
+                 'required' => false,
+                 'label'    => 'forms.modele.image'    
+                 
             ])
         ;
     }

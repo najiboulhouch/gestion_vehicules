@@ -31,16 +31,20 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="{{ path('index') }}">Accueil</a>
+								<a class="nav-link active" aria-current="page" href="{{ path('index') }}">{% trans %}
+									Accueil
+									{% endtrans %}</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">à propos</a>
+								<a class="nav-link" href="#">{% trans %}
+									à propos{% endtrans %}</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{{ path('voiture_promotion') }}">Promotions</a>
+								<a class="nav-link" href="{{ path('voiture_promotion') }}">
+									{% trans %}Promotions{% endtrans %}</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="">Comparaison voitures
+								<a class="nav-link" href="">{% trans %}Comparaison voitures{% endtrans %}
 								</a>
 							</li>
 							{% if is_granted('ROLE_ADMIN') %}
@@ -70,15 +74,29 @@
 										</li>
 									</ul>
 								</li>
-							{%endif %}
+								{%endif %}
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" 
+									data-bs-toggle="dropdown" href="#" role="button" 
+									aria-expanded="false">{% trans %}Langue{% endtrans %}</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="dropdown-item" href="{{ path('index' , {_locale : 'fr'}) }}">{% trans %}Français{% endtrans %}</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="{{ path('index' ,{_locale : 'en'}) }}">{% trans %}Englais{% endtrans %}</a>
+										</li>
+									</ul>
+								</li>
+							
 						</ul>
 						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 							<a class="btn btn-outline-dark" href="{{ path('app_logout') }}" type="submit">
-								Déconnexion
+								{% trans %}Déconnexion{% endtrans %}
 							</a>
 						{%else %}
 							<a class="btn btn-outline-dark" href="{{ path('app_login') }}" type="submit">
-								Connexion
+								{% trans %}Connexion{% endtrans %}
 							</a>
 						{% endif %}
 
@@ -91,8 +109,8 @@
 <header class="bg-dark py-5">
 	<div class="container px-4 px-lg-5 my-5">
 		<div class="text-center text-white">
-			<h1 class="display-4 fw-bolder">Commandez votre voiture</h1>
-			<p class="lead fw-normal text-white-50 mb-0">1ére plateforme marocaine de ventes des voitures</p>
+			<h1 class="display-4 fw-bolder">{% trans %}Commandez votre voiture{% endtrans %}</h1>
+			<p class="lead fw-normal text-white-50 mb-0">{% trans %}1ére plateforme marocaine de ventes des voitures{% endtrans %}</p>
 		</div>
 	</div>
 </header>{% endblock %}<!-- Section--><section class="py-5">
@@ -108,6 +126,7 @@
 	{%block javascript %}
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 		<!-- Core theme JS-->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 		<script src="{{ asset('js/scripts.js') }}"></script>
 	{% endblock %}
 </body></body></html></body></html>

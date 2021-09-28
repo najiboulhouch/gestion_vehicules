@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/couleur")
+ * @Route("{_locale}/couleur" , requirements={"_locale": "en|fr"})
  */
 class CouleurController extends AbstractController
 {

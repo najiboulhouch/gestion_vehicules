@@ -14,7 +14,7 @@ class MarqueType extends AbstractType
     {
         $builder
             ->add('nomMarque', TextType::class , [
-                'label' => 'Nom de marque'
+                'label' => 'forms.marque.type'
             ])
         ;
     }

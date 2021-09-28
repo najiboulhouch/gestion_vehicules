@@ -18,16 +18,16 @@ class ClientType extends AbstractType
     {
         $builder
             ->add('nomClient' , TextType::class,[
-                'label'      => 'Nom du client'
+                'label'      => 'forms.client.nom'
             ])
             ->add('adresse' , TextareaType::class,[
-                'label'      => 'Adresse du client'
+                'label'      => 'forms.client.adresse'
             ])
             ->add('tel' , TelType::class, [
-                'label'     => 'Téléphone du client'
+                'label'     => 'forms.client.tel'
             ])
             ->add('email' , EmailType ::class,[
-                'label'     => 'Email du client'
+                'label'     => 'forms.client.email'
             ])
         ;
     }

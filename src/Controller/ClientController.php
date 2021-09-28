@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/client")
+ * @Route("/{_locale}/client" , requirements={"_locale": "en|fr"})
  * @IsGranted("ROLE_ADMIN")
  */
 class ClientController extends AbstractController

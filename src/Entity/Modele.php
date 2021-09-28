@@ -45,9 +45,11 @@ class Modele
     private $voitures;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="Modele")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="Modele" , cascade={"persist", "remove"})
      */
     private $images;
+
+    
 
     public function __construct()
     {

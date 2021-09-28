@@ -25,49 +25,50 @@ class VoitureType extends AbstractType
     {
         $builder
             ->add('prix', IntegerType::class, [
-                'label'      => 'Prix'
+                'label'      => 'forms.voiture.prix'
             ])
             ->add('km', IntegerType::class, [
-                'label' => 'Kélométrage'
+                'label' => 'forms.voiture.km'
             ])
             ->add('dateConstruction', DateType::class, [
-                'label'     => 'Date de construction',
+                'label'     => 'forms.voiture.dateCon',
                 'widget' => 'single_text',
             ])
             ->add('etat', ChoiceType::class, [
                 'choices'  => [
-                    'Choisir votre état' => '',
+                    'forms.voiture.etat' => '',
                     'Neuve' => 'Neuve',
                     'Ocasion' => 'Ocasion',
                 ],
-                'label'     => 'Etat'
+                'label'     => 'forms.voiture.label.etat'
             ])
             ->add('dateMiseEnVente', DateType::class, [
-                'label'     => 'Date de mise en vente',
+                'label'     => 'forms.voiture.dateMise',
                 'widget' => 'single_text'
             ])
             ->add('disponibilite', CheckboxType::class, [
-                'label' => 'Disponibilité'
+                'label' => 'forms.voiture.dispo'
             ])
             ->add('promotion', IntegerType::class, [
-                'label' => 'Promotion(%)'
+                'label' => 'forms.voiture.promo'
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description'
+                'label' => 'forms.voiture.description'
             ])
             ->add('Couleur', EntityType::class, [
                 'class' => Couleur::class,
-                'choice_label' => 'nomCouleur'
+                'choice_label' => 'nomCouleur',
+                'label' => 'forms.voiture.color'
             ])
             ->add('Carburant', EntityType::class, [
                 'class' => Carburant::class,
                 'choice_label' => 'nomCarburant',
-                'label' => 'Type de carburant'
+                'label' => 'forms.voiture.carburant'
             ])
             ->add('Modele', EntityType::class, [
                 'class' => Modele::class,
                 'choice_label' => 'nomModele',
-                'label' => 'Type de modéle'
+                'label' => 'forms.voiture.modele'
             ]);
     }
 

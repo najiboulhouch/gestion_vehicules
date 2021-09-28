@@ -32,7 +32,8 @@ class Image
     private $nomImage;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Modele::class, inversedBy="images")
+     * @ORM\ManyToOne(targetEntity=Modele::class, inversedBy="images" , 
+     * cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $Modele;
@@ -64,5 +65,9 @@ class Image
         $this->Modele = $Modele;
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->nomImage;
     }
 }

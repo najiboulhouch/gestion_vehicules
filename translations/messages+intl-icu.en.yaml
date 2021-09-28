@@ -1,0 +1,81 @@
+Accueil: Home
+'à propos': 'About us'
+Promotions: Solds
+'Comparaison voitures': 'Cars comapraison'
+Déconnexion: Logout
+Connexion: Login
+'Commandez votre voiture': 'Order your car online'
+Recherche: Search
+Marque: Brand
+'Choisir votre marque': 'Choose your brand'
+'Choisir votre modéle': 'Choose your modele'
+Etat: Status
+'Choisir votre état': 'Choose your status'
+'Choisir votre type de carburant': 'choose your fuel type'
+'Choisir votre couleur': 'Choose your color'
+Recherchez: Search
+Modèle: Modele
+Langue: Langue
+Français: French
+Englais: English
+'1ére plateforme marocaine de ventes des voitures': 'We are number One in Morocco'
+'Plateforme de vente des voiture en ligne': 'Online car sales platform'
+'Fiche technique': 'Technical sheet'
+'Log in!': 'Log in!'
+'You are logged in as': 'You are logged in as'
+'Please sign in': 'Please sign in'
+Email: Email
+Password: Password
+'Sign in': 'Sign in'
+forms.commende.comment: Comment
+'Modifier une commande': 'Update Order'
+'Modifier commande': 'Update Order'
+Retour: 'Back to list'
+Commandes: Orders
+'Listes des commandes enregistrées': 'List of saved orders'
+'Date de rendez-vous': 'date of meeting'
+Afficher: Show
+Modifier: Update
+'Pas de commandes enregistrées': 'No orders saved'
+'Merci de saisir votre informations personnelles': 'Do you please write correctly your informations'
+Supprimer: Delete
+Achetez: 'Buy your car'
+forms.client.nom: 'Client name'
+forms.client.adresse: Address
+forms.client.tel: Phone
+forms.client.email: Email
+forms.carburant.type: 'Fuel type'
+forms.color.name: Color
+forms.marque.type: 'Brand''s name'
+forms.modele.name: 'modele''s name'
+forms.voiture.prix: Price
+forms.voiture.km: KM
+forms.voiture.dateCon: 'Creation date'
+forms.voiture.etat: 'Choose car''s status'
+forms.voiture.label.etat: Status
+forms.voiture.dateMise: 'Buy date'
+forms.voiture.dispo: Availibility
+forms.voiture.promo: Sold(%)
+forms.voiture.description: Description
+forms.voiture.carburant: 'Fuel type'
+forms.voiture.modele: 'Modele type'
+forms.voiture.color: Color
+'Modifier un type de carburant': 'Update fuel type'
+'Modifier type de carburant': 'Set Fuel type'
+'Modifier carburant': 'Update Fuel'
+'Supprimer carburant': 'Delete Fuel'
+Commentaire: Comment
+'Ajouter carburant': 'Add Fuel'
+Carburant: Fuel
+'Liste de type des carburants enregistrés': 'List of saved Fuel'
+'Type de carburant': 'Fuel type'
+'Pas de carburant enregistrés': 'no Ful saved'
+'Ajouter un nouveau type de carburant': 'Add new Fuel type'
+'Ajouter un type de carburant': 'Add Fuel type'
+'Fiche technique de la voiture': 'Technical sheet'
+'Fabriquée le':   Date of fabrication
+Kélométrage: Mileage
+Couleur: Color
+'Type carburant': 'Fuel type'
+Commandez: Order your car
+forms.modele.image: Select a pictures of this modele

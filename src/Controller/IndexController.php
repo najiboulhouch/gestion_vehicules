@@ -12,15 +12,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+
 
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/index", name="index" , methods ={"POST" , "GET"})
+     * @Route("/{_locale}/index", name="index" , methods ={"POST" , "GET"} ,  
+     * requirements={"_locale": "en|fr"})
      */
-    public function index(Request $request , PaginatorInterface $paginator): Response
-    {   
-
+    public function index(Request $request, PaginatorInterface $paginator , LoggerInterface $logger): Response
+    {
         $idMarque = $request->query->get("marque");
         $idModele = $request->query->get("modele");
         $etat = $request->query->get("etat");
@@ -28,56 +31,63 @@ class IndexController extends AbstractController
         $idColeur = $request->query->get("col");
         $budgetMin = $request->query->get("bud_min");
         $budgetMax = $request->query->get("bud_max");
-        
+
         $voitures = $this->getDoctrine()->getRepository(Voiture::class)->findAll();
         $carburants = $this->getDoctrine()->GetRepository(Carburant::class)->findAll();
         $couleurs = $this->getDoctrine()->getRepository(Couleur::class)->findAll();
         $marques = $this->getDoctrine()->getRepository(Marque::class)->findAll();
 
 
-        
+
         if (!empty($idMarque)) {
             $modeles = $this->getDoctrine()->getRepository(Modele::class)->findBy(['Marque' => $idMarque]);
             $voitures = array();
             foreach ($modeles as $modele) {
                 foreach ($modele->getVoitures() as $voiture) {
-                    array_push($voitures , $voiture);
+                    array_push($voitures, $voiture);
                 }
             }
-                           
-        } else {          
+        } else {
             $modeles = $this->getDoctrine()->getRepository(Modele::class)->findAll();
         }
 
-        if(!empty($idModele)){        
+        if (!empty($idModele)) {
             $voitures = $this->getDoctrine()->getRepository(Voiture::class)->findBy(['Modele' => $idModele]);
         }
 
-        if(!empty($etat)){
+        if (!empty($etat)) {
             $voitures = $this->getDoctrine()->getRepository(Voiture::class)->findBy(['etat' => $etat]);
         }
-        
-        if(!empty($idCarburant)){
-           
+
+        if (!empty($idCarburant)) {
+
             $voitures = $this->getDoctrine()->getRepository(Voiture::class)->findBy(['Carburant' => $idCarburant]);
         }
 
-        if(!empty($idColeur)){
-           
+        if (!empty($idColeur)) {
+
             $voitures = $this->getDoctrine()->getRepository(Voiture::class)->findBy(['Couleur' => $idColeur]);
         }
 
-        if(!empty($budgetMin) && !empty($budgetMax)){
-         
+        if (!empty($budgetMin) && !empty($budgetMax)) {
+
             $voitures = $this->getDoctrine()
-            ->getRepository(Voiture::class)->findByBudget($budgetMin , $budgetMax);
+                ->getRepository(Voiture::class)->findByBudget($budgetMin, $budgetMax);
         }
 
-        if(!empty($idModele) && !empty($etat) && !empty($idCarburant) && 
-        !empty($idColeur) && !empty($budgetMin) && !empty($budgetMax) ){
+        if (
+            !empty($idModele) && !empty($etat) && !empty($idCarburant) &&
+            !empty($idColeur) && !empty($budgetMin) && !empty($budgetMax)
+        ) {
             $voitures = $this->getDoctrine()
-            ->getRepository(Voiture::class)->advancedSearch($idModele , $etat , $idCarburant ,
-             $idColeur, $budgetMin , $budgetMax);
+                ->getRepository(Voiture::class)->advancedSearch(
+                    $idModele,
+                    $etat,
+                    $idCarburant,
+                    $idColeur,
+                    $budgetMin,
+                    $budgetMax
+                );
         }
 
         $pagination = $paginator->paginate(
@@ -97,8 +107,16 @@ class IndexController extends AbstractController
             'budgetMin' => $budgetMin,
             'budgetMax' => $budgetMax,
             'carburants' => $carburants,
-            'couleurs' => $couleurs,           
+            'couleurs' => $couleurs,
             'pagination' => $pagination,
-                ]);
+        ]);
+    }
+
+    /**
+     * @Route("/language/{lg}", name="language" , methods ={"GET"})
+     */
+    public function language(Request $request , string $lg  ) : ?Response
+    {
+        return $this->redirectToRoute('index');
     }
 }

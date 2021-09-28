@@ -13,7 +13,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/voiture")
+ * @Route("{_locale}/voiture" , requirements={"_locale": "en|fr"})
  */
 class VoitureController extends AbstractController
 {

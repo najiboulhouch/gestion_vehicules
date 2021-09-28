@@ -38,7 +38,8 @@ class Commande
     private $commentaire;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="commandes" , cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="commandes" , 
+     * cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $Client;

@@ -14,7 +14,7 @@ class CarburantType extends AbstractType
     {
         $builder
             ->add('nomCarburant' , TextType::class , [
-                'label' => 'Type de carburant'
+                'label' => 'forms.carburant.type'
             ])
         ;
     }

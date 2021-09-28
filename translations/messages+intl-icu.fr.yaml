@@ -1,0 +1,81 @@
+Accueil: Accueil
+'à propos': 'à propos'
+Promotions: Promotions
+'Comparaison voitures': 'Comparaison voitures'
+Déconnexion: Déconnexion
+Connexion: Connexion
+'Commandez votre voiture': 'Commandez votre voiture'
+Recherche: Recherche
+Marque: Marque
+'Choisir votre marque': 'Choisir votre marque'
+'Choisir votre modéle': 'Choisir votre modéle'
+Etat: Etat
+'Choisir votre état': 'Choisir votre état'
+'Choisir votre type de carburant': 'Choisir votre type de carburant'
+'Choisir votre couleur': 'Choisir votre couleur'
+Recherchez: Recherchez
+Modèle: Modèle
+Langue: Langue
+Français: Français
+Englais: Englais
+'1ére plateforme marocaine de ventes des voitures': '1ére plateforme marocaine de ventes des voitures'
+'Plateforme de vente des voiture en ligne': 'Plateforme de vente des voiture en ligne'
+'Fiche technique': 'Fiche technique'
+'Log in!': 'Se connecter!'
+'You are logged in as': 'Vous êtes connecté en tant que'
+'Please sign in': 'Veuillez vous connecter'
+Email: Email
+Password: 'Mot de passe'
+'Sign in': 'S''identifier'
+forms.commende.comment: Commentaire
+'Modifier une commande': 'Modifier une commande'
+'Modifier commande': 'Modifier commande'
+Retour: Retour
+Commandes: Commandes
+'Listes des commandes enregistrées': 'Listes des commandes enregistrées'
+'Date de rendez-vous': 'Date de rendez-vous'
+Afficher: Afficher
+Modifier: Modifier
+'Pas de commandes enregistrées': 'Pas de commandes enregistrées'
+'Merci de saisir votre informations personnelles': 'Merci de saisir votre informations personnelles'
+Supprimer: Supprimer
+Achetez: Achetez
+forms.client.nom: 'Nom du client'
+forms.client.adresse: 'Adresse du client'
+forms.client.tel: 'Téléphone du client'
+forms.client.email: 'Email du client'
+forms.carburant.type: 'Type de carburant'
+forms.color.name: Couleur
+forms.marque.type: 'Nom de marque'
+forms.modele.name: 'Nom de modèle'
+forms.voiture.prix: Prix
+forms.voiture.km: Kélométrage
+forms.voiture.dateCon: 'Date de construction'
+forms.voiture.etat: 'Choisir votre état'
+forms.voiture.label.etat: Etat
+forms.voiture.dateMise: 'Date de mise en vente'
+forms.voiture.dispo: Disponibilité
+forms.voiture.promo: Promotion(%)
+forms.voiture.description: Description
+forms.voiture.carburant: 'Type de carburant'
+forms.voiture.modele: 'Type de modéle'
+forms.voiture.color: Couleur
+'Modifier un type de carburant': 'Modifier un type de carburant'
+'Modifier type de carburant': 'Modifier type de carburant'
+'Supprimer carburant': 'Supprimer carburant'
+Commentaire: Commentaire
+'Modifier carburant': 'Modifier carburant'
+'Ajouter carburant': 'Ajouter carburant'
+Carburant: Carburant
+'Liste de type des carburants enregistrés': 'Liste de type des carburants enregistrés'
+'Type de carburant': 'Type de carburant'
+'Pas de carburant enregistrés': 'Pas de carburant enregistrés'
+'Ajouter un nouveau type de carburant': 'Ajouter un nouveau type de carburant'
+'Ajouter un type de carburant': 'Ajouter un type de carburant'
+'Fiche technique de la voiture': 'Fiche technique de la voiture'
+'Fabriquée le': 'Fabriquée le'
+Kélométrage: Kilométrage
+Couleur: Couleur
+'Type carburant': 'Type carburant'
+Commandez: Commandez
+forms.modele.image: Selectionner les images de ce modèle

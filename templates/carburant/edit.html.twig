@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier un type de carburant{% endblock %}
+{% block title %}{% trans %}Modifier un type de carburant{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Modifier type de carburant</h1>
+    <h1>{% trans %}Modifier type de carburant{% endtrans %}</h1>
 
-    {{ include('carburant/_form.html.twig', {'button_label': 'Mettre à  jour'}) }}
+    {{ include('carburant/_form.html.twig', {'button_label': 'Modifier carburant'|trans } ) }}
 <br>
-    <a class="btn btn-primary" href="{{ path('carburant_index') }}">Retour</a>
+    <a class="btn btn-primary" href="{{ path('carburant_index') }}">{% trans %}Retour{% endtrans %}</a>
 
 {% endblock %}

@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier une commande{% endblock %}
+{% block title %}{% trans %}Modifier une commande{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Modifier commande</h1>
+    <h1>{% trans %}Modifier commande{% endtrans %}</h1>
 
     {{ include('commande/_form.html.twig', {'button_label': 'Update'}) }}
 <br>
-    <a class="btn btn-primary" href="{{ path('commande_index') }}">Retour</a>
+    <a class="btn btn-primary" href="{{ path('commande_index') }}">{% trans %}Retour{% endtrans %}</a>
 
 {% endblock %}

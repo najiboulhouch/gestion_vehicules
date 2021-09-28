@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/marque")
+ * @Route("{_locale}/marque" , requirements={"_locale": "en|fr"})
  */
 class MarqueController extends AbstractController
 {

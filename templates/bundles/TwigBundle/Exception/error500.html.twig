@@ -1,0 +1,10 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Internal error</h1>
+    <p>
+        We are sorry for this internal error,please go to this link
+        <a href="{{ path('index') }}">return to the homepage</a>.
+    </p>
+{% endblock %}
