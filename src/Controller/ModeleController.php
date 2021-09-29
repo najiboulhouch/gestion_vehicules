@@ -80,7 +80,7 @@ class ModeleController extends AbstractController
                         $entityManager->flush();
 
                     } catch (FileException $e) {
-                        $logger->error($e->getMessage());
+                        $this->logger->error($e->getMessage());
                     }
             }
 
@@ -106,7 +106,7 @@ class ModeleController extends AbstractController
     /**
      * @Route("/{id}/edit", name="modele_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Modele $modele , LoggerInterface $logger): Response
+    public function edit(Request $request, Modele $modele): Response
     {
         $form = $this->createForm(ModeleType::class, $modele);
         $form->handleRequest($request);
@@ -136,7 +136,7 @@ class ModeleController extends AbstractController
                         $entityManager->flush();
                         return $this->redirectToRoute('modele_index', [], Response::HTTP_SEE_OTHER);
                     } catch (FileException $e) {
-                        $logger->error($e->getMessage());
+                        $this->logger->error($e->getMessage());
                     }
             }
         }
