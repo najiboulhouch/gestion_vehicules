@@ -21,7 +21,6 @@ class Commande
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Date de commande est obligatoire")
-     * @Assert\Date(message="Merci de respecter le format de date de rendez-vous")
      */
     private $dateRdv;
 
