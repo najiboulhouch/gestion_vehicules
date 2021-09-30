@@ -111,12 +111,4 @@ class IndexController extends AbstractController
             'pagination' => $pagination,
         ]);
     }
-
-    /**
-     * @Route("/language/{lg}", name="language" , methods ={"GET"})
-     */
-    public function language(Request $request , string $lg  ) : ?Response
-    {
-        return $this->redirectToRoute('index');
-    }
 }

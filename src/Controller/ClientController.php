@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class ClientController extends AbstractController
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger  = $logger;
+    }
+
     /**
      * @Route("/", name="client_index", methods={"GET"})
      */
@@ -37,9 +45,17 @@ class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($client);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($client);
+                $entityManager->flush();
+            } catch (\Exception $e) {          
+                $this->logger->error('An error occurred(Inerting Client) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on adding, Please contact administrator'
+                    );
+            }
 
             return $this->redirectToRoute('client_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -69,7 +85,15 @@ class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            try {
+                $this->getDoctrine()->getManager()->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Updating Client) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on updating, Please contact administrator'
+                    );
+            }
 
             return $this->redirectToRoute('client_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -86,9 +110,17 @@ class ClientController extends AbstractController
     public function delete(Request $request, Client $client): Response
     {
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($client);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($client);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Deleting Client) :' . $e->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on deleting, Please contact administrator'
+                );
+            }
         }
 
         return $this->redirectToRoute('client_index', [], Response::HTTP_SEE_OTHER);

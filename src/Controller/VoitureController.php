@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Voiture;
 use App\Form\VoitureType;
 use App\Repository\VoitureRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -17,6 +19,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class VoitureController extends AbstractController
 {
+
+    private $logger  ;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger  = $logger;
+    }
+
     /**
      * @IsGranted("ROLE_ADMIN")
      * @Route("/", name="voiture_index", methods={"GET"})
@@ -45,9 +55,17 @@ class VoitureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($voiture);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($voiture);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Inerting Couleur) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on adding, Please contact administrator'
+                    );
+            }
 
             return $this->redirectToRoute('voiture_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -64,7 +82,6 @@ class VoitureController extends AbstractController
     public function showPromotion(Request $request, PaginatorInterface $paginator): Response
     {
         $voitures = $this->getDoctrine()->getRepository(Voiture::class)->findByPromotion();
-
 
         $pagination = $paginator->paginate(
             $voitures,
@@ -96,7 +113,15 @@ class VoitureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            try {
+                $this->getDoctrine()->getManager()->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Updating Voiture) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on updating, Please contact administrator'
+                    );
+            }
 
             return $this->redirectToRoute('voiture_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -115,8 +140,17 @@ class VoitureController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete' . $voiture->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($voiture);
-            $entityManager->flush();
+            try {
+                $entityManager->remove($voiture);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Deleting  Voiture) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on deleting, Please contact administrator'
+                    );
+            }
+            
         }
 
         return $this->redirectToRoute('voiture_index', [], Response::HTTP_SEE_OTHER);

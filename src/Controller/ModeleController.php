@@ -23,11 +23,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ModeleController extends AbstractController
 {
 
-    private $slugger ;
-    private $logger  ;
+    private $slugger;
+    private $logger;
 
 
-    public function __construct( SluggerInterface $slugger , LoggerInterface $logger)
+    public function __construct(SluggerInterface $slugger, LoggerInterface $logger)
     {
         $this->slugger = $slugger;
         $this->logger  = $logger;
@@ -53,35 +53,44 @@ class ModeleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($modele);
-            $entityManager->flush();
-
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($modele);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Inerting Modele) :' . $e->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on adding, Please contact administrator'
+                );
+            }
             $lastModele = $this->getDoctrine()->getRepository(Modele::class)->getLastId();
-    
-            $imageFile = $form->get('picture')->getData();        
+            $imageFile = $form->get('picture')->getData();
 
             foreach ($imageFile as $value) {
 
                 $originalFilename = pathinfo($value->getClientOriginalName(), PATHINFO_FILENAME);
-                    
-                    $safeFilename = $this->slugger->slug($originalFilename);
-                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $value->guessExtension();
-                    try {
-                        $value->move(
-                            $this->getParameter('voitures_directory'),
-                            $newFilename
-                        );
 
-                        $image = new Image();
-                        $image->setNomImage($newFilename);
-                        $image->setModele($lastModele);
-                        $entityManager->persist($image);
-                        $entityManager->flush();
+                $safeFilename = $this->slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $value->guessExtension();
+                try {
+                    $value->move(
+                        $this->getParameter('voitures_directory'),
+                        $newFilename
+                    );
 
-                    } catch (FileException $e) {
-                        $this->logger->error($e->getMessage());
-                    }
+                    $image = new Image();
+                    $image->setNomImage($newFilename);
+                    $image->setModele($lastModele);
+                    $entityManager->persist($image);
+                    $entityManager->flush();
+                } catch (FileException $e) {
+                    $this->logger->error('An error occurred on File transfert :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on File, Please contact administrator'
+                    );
+                }
             }
 
             return $this->redirectToRoute('modele_index', [], Response::HTTP_SEE_OTHER);
@@ -112,35 +121,47 @@ class ModeleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Editing Modele) :' . $e->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on updating, Please contact administrator'
+                );
+            }
 
-            $imageFile = $form->get('picture')->getData();        
+            $imageFile = $form->get('picture')->getData();
 
             foreach ($imageFile as $value) {
 
                 $originalFilename = pathinfo($value->getClientOriginalName(), PATHINFO_FILENAME);
-                    
-                    $safeFilename = $this->slugger->slug($originalFilename);
-                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $value->guessExtension();
-                    try {
-                        $value->move(
-                            $this->getParameter('voitures_directory'),
-                            $newFilename
-                        );
 
-                        $image = new Image();
-                        $image->setNomImage($newFilename);
-                        $image->setModele($modele);
-                        $entityManager->persist($image);
-                        $entityManager->flush();
-                        return $this->redirectToRoute('modele_index', [], Response::HTTP_SEE_OTHER);
-                    } catch (FileException $e) {
-                        $this->logger->error($e->getMessage());
-                    }
+                $safeFilename = $this->slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $value->guessExtension();
+                try {
+                    $value->move(
+                        $this->getParameter('voitures_directory'),
+                        $newFilename
+                    );
+
+                    $image = new Image();
+                    $image->setNomImage($newFilename);
+                    $image->setModele($modele);
+                    $entityManager->persist($image);
+                    $entityManager->flush();
+                    return $this->redirectToRoute('modele_index', [], Response::HTTP_SEE_OTHER);
+                } catch (FileException $e) {
+                    $this->logger->error('An error occurred on File transfert :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on File, Please contact administrator'
+                    );
+                }
             }
         }
-           
+
 
         return $this->renderForm('modele/edit.html.twig', [
             'modele' => $modele,
@@ -157,13 +178,20 @@ class ModeleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $filesystem = new Filesystem();
 
-            foreach ($modele->getImages() as $image) {
-                $filesystem->remove( $this->getParameter('voitures_directory') . '/'. $image->getNomImage());
+            try {
+                foreach ($modele->getImages() as $image) {
+                    $filesystem->remove($this->getParameter('voitures_directory') . '/' . $image->getNomImage());
+                }
+                $entityManager->remove($modele);
+                $entityManager->flush();
+            } catch (\Exception $th) {
+                $this->logger->error('An error occurred(Deleting) :' . $th->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on deleting, Please contact administrator'
+                );
+                return $this->redirectToRoute('modele_index', [], Response::HTTP_SEE_OTHER);
             }
-
-            $entityManager->remove($modele);
-
-            $entityManager->flush();
         }
 
         return $this->redirectToRoute('modele_index', [], Response::HTTP_SEE_OTHER);

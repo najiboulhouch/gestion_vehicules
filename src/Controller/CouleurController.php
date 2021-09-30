@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Couleur;
 use App\Form\CouleurType;
 use App\Repository\CouleurRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CouleurController extends AbstractController
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger  = $logger;
+    }
     /**
      * @Route("/", name="couleur_index", methods={"GET"})
      */
@@ -35,9 +42,17 @@ class CouleurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($couleur);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($couleur);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Inerting Couleur) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on adding, Please contact administrator'
+                    );
+            }
 
             return $this->redirectToRoute('couleur_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,7 +82,15 @@ class CouleurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            try {
+                $this->getDoctrine()->getManager()->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Updating Couleur) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on updating, Please contact administrator'
+                    );
+            }
 
             return $this->redirectToRoute('couleur_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -84,9 +107,17 @@ class CouleurController extends AbstractController
     public function delete(Request $request, Couleur $couleur): Response
     {
         if ($this->isCsrfTokenValid('delete'.$couleur->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($couleur);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($couleur);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Deleting Couleur) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on deleting, Please contact administrator'
+                    );
+            }
         }
 
         return $this->redirectToRoute('couleur_index', [], Response::HTTP_SEE_OTHER);

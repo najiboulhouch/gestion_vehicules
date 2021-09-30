@@ -27,7 +27,8 @@
           </tbody>
     </table>
 
-    <a class="btn btn-primary"href="{{ path('modele_index') }}">Retour</a>
+    <a class="btn btn-primary"href="{{ path('modele_index') }}"><i class="bi bi-skip-backward-fill"></i> Retour</a>
 
-    <a class="btn btn-primary" href="{{ path('modele_edit', {'id': modele.id}) }}">Modifier</a>
+    <a class="btn btn-primary" href="{{ path('modele_edit', {'id': modele.id}) }}">
+    <i class="bi bi-pencil-square"></i>  Modifier</a>
 {% endblock %}

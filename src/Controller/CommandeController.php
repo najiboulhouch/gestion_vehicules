@@ -7,6 +7,7 @@ use App\Form\CommandeType;
 use App\Entity\Voiture;
 use App\Repository\CommandeRepository;
 use DateTime;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class CommandeController extends AbstractController
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger  = $logger;
+    }
+
     /**
      * @Route("/", name="commande_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -44,15 +52,24 @@ class CommandeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $commande->setVoiure($voiture);
-            $entityManager->persist($commande);            
-            $entityManager->flush();
-            $this->addFlash(
-                'notice',
-                'Votre commande a été enregistrée avec succès, vous recevez un appel 
-                téléphonique le plutôt possible'
-            );
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $commande->setVoiure($voiture);
+                $entityManager->persist($commande);            
+                $entityManager->flush();
+                $this->addFlash(
+                    'notice',
+                    'Votre commande a été enregistrée avec succès, vous recevez un appel 
+                    téléphonique le plutôt possible'
+                );    
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Inerting Order) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on adding, Please contact administrator'
+                    );
+            }
+            
             return $this->redirectToRoute('commande_new', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
@@ -83,8 +100,16 @@ class CommandeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+         try {
+             $this->getDoctrine()->getManager()->flush();
+         } catch (\Exception $e) {
+            $this->logger->error('An error occurred(Updating Order) :' . $e->getMessage());
+            $this->addFlash(
+                'error',
+                'An error occurred on updating, Please contact administrator'
+            );
+         }
+        
             return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -101,9 +126,16 @@ class CommandeController extends AbstractController
     public function delete(Request $request, Commande $commande): Response
     {
         if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($commande);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($commande);
+                $entityManager->flush();
+            } catch (\Throwable $e) {
+                $this->logger->error('An error occurred(Deleting Order) :' . $e->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on deleting, Please contact administrator'
+                );            }
         }
 
         return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);

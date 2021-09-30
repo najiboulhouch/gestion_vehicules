@@ -6,6 +6,7 @@ use App\Entity\Carburant;
 use App\Form\CarburantType;
 use App\Repository\CarburantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CarburantController extends AbstractController
 {
-
     private $entityManager ;
+    private $logger;
 
-    public function __construct(EntityManagerInterface $em){
+    public function __construct(EntityManagerInterface $em , LoggerInterface $logger){
         $this->entityManager = $em;
+        $this->logger  = $logger;
     }
 
 
@@ -44,8 +46,17 @@ class CarburantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($carburant);
-            $this->entityManager->flush();
+
+            try {
+                $this->entityManager->persist($carburant);
+                $this->entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Inerting Carburant) :' . $e->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on adding, Please contact administrator'
+                );
+            }
 
             return $this->redirectToRoute('carburant_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -75,7 +86,15 @@ class CarburantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
+            try {
+                $this->entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Inerting Carburant) :' . $e->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on adding, Please contact administrator'
+                );
+            }
 
             return $this->redirectToRoute('carburant_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -92,9 +111,15 @@ class CarburantController extends AbstractController
     public function delete(Request $request, Carburant $carburant): Response
     {
         if ($this->isCsrfTokenValid('delete'.$carburant->getId(), $request->request->get('_token'))) {
-            
-            $this->entityManager->remove($carburant);
-            $this->entityManager->flush();
+            try {
+                $this->entityManager->remove($carburant);
+                $this->entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Deleting Carburant) :' . $e->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on deleting, Please contact administrator'
+                );            }
         }
 
         return $this->redirectToRoute('carburant_index', [], Response::HTTP_SEE_OTHER);

@@ -18,8 +18,9 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('carburant_index') }}">{% trans %}Retour{% endtrans %}</a>
+    <a class="btn btn-primary" href="{{ path('carburant_index') }}"><i class="bi bi-skip-backward-fill"></i>  {% trans %}Retour{% endtrans %}</a>
 
-    <a class="btn btn-primary" href="{{ path('carburant_edit', {'id': carburant.id}) }}">{% trans %}Modifier{% endtrans %}</a>
+    <a class="btn btn-primary" href="{{ path('carburant_edit', {'id': carburant.id}) }}">
+    <i class="bi bi-pencil-square"></i>  {% trans %}Modifier{% endtrans %}</a>
 
 {% endblock %}

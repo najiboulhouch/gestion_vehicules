@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Marque;
 use App\Form\MarqueType;
 use App\Repository\MarqueRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MarqueController extends AbstractController
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger  = $logger;
+    }
+    
     /**
      * @Route("/", name="marque_index", methods={"GET"})
      */
@@ -35,9 +43,17 @@ class MarqueController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($marque);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($marque);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Inerting Marque) :' . $e->getMessage());
+                $this->addFlash(
+                    'error',
+                    'An error occurred on adding, Please contact administrator'
+                );
+            }
 
             return $this->redirectToRoute('marque_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,7 +83,15 @@ class MarqueController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            try {
+                $this->getDoctrine()->getManager()->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Updating Marque) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on updating, Please contact administrator'
+                    );
+            }
 
             return $this->redirectToRoute('marque_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -84,9 +108,17 @@ class MarqueController extends AbstractController
     public function delete(Request $request, Marque $marque): Response
     {
         if ($this->isCsrfTokenValid('delete'.$marque->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($marque);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($marque);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->logger->error('An error occurred(Deleting Marque) :' . $e->getMessage());
+                    $this->addFlash(
+                        'error',
+                        'An error occurred on deleting, Please contact administrator'
+                    );
+            }
         }
 
         return $this->redirectToRoute('marque_index', [], Response::HTTP_SEE_OTHER);

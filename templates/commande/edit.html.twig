@@ -7,6 +7,6 @@
 
     {{ include('commande/_form.html.twig', {'button_label': 'Update'}) }}
 <br>
-    <a class="btn btn-primary" href="{{ path('commande_index') }}">{% trans %}Retour{% endtrans %}</a>
+    <a class="btn btn-primary" href="{{ path('commande_index') }}"><i class="bi bi-skip-backward-fill"></i> {% trans %}Retour{% endtrans %}</a>
 
 {% endblock %}
